@@ -1,27 +1,21 @@
-# webpack-bundle-diff-add-children
+# webpack-stats-extract-ids
 
-[npm](https://www.npmjs.com/package/webpack-bundle-diff-add-children), [github](https://github.com/Adjective-Object/webpack-bundle-diff-add-children)
+[npm](https://www.npmjs.com/package/webpack-stats-extract-ids), [github](https://github.com/Adjective-Object/webpack-stats-extract-ids)
 
-A utility to add children to the bundle graph produced by webpack-bundle-diff
-([npm](https://www.npmjs.com/package/webpack-bundle-diff), [github](https://github.com/smikula/webpack-bundle-diff))
+A utility to get a mapping between webpack IDs and modules
 
 ## Usage
 
 `yarn add webpack-bundle-diff-add-children`
 
 ```js
-const getModuleGraphWithChildren = require('webpack-bundle-diff-add-children')
-    .getModuleGraphWithChildren
-const deriveBundleData = require('webpack-bundle-diff').deriveBundleData
+const getModuleIds = require('webpack-stats-extract-ids').getModuleIds;
 
 // Get your bundle stats somehow
-const webpackStats = require('fs').readFileSync('./stats.json', 'utf-8')
+const webpackStats = require('fs').readFileSync('./stats.json', 'utf-8');
 
 // Derive webpack-bundle-diff data
-const data = deriveBundleData(webpackStats)
-
-// Add children to the graph
-const graphWithChildren = getModuleGraphWithChildren(stats.bundleData.graph)
+const moduleIdToNameMap = getModuleIds(webpackStats);
 ```
 
 ## Development
@@ -30,4 +24,5 @@ const graphWithChildren = getModuleGraphWithChildren(stats.bundleData.graph)
 yarn # install dependencies
 yarn build # build.             Can also use `rollup -c`
 yarn watch # build with watch.  Can also use `rollup -cw`
+yarn jest # run tests
 ```
