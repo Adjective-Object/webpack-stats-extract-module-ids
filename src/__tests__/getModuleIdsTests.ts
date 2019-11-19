@@ -1,5 +1,7 @@
 import { Stats as WebpackStats } from 'webpack';
 import { getModuleIds } from '../getModuleIds';
+import { readFile } from 'mz/fs';
+import { join as joinPath } from 'path';
 
 type RecursivePartial<T> = {
     [P in keyof T]?: RecursivePartial<T[P]>;
@@ -47,5 +49,16 @@ describe('getModuleIds', () => {
                 name: 'lib/baz'
             }
         });
+    });
+
+    it('matches the snapshot', async () => {
+        const statsJsonString = await readFile(
+            joinPath(__dirname, '/test-data', 'bonsai-stats.json'),
+            'utf-8'
+        );
+        const stats = JSON.parse(statsJsonString);
+        const resultGraph = getModuleIds(stats);
+
+        expect(resultGraph).toMatchSnapshot();
     });
 });
